@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{{ name }} Resume</title>
+<style>
+    @page {
+        size: letter portrait;
+        margin: 1.5cm;
+    }
+    body {
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        font-size: 11pt;
+        color: #333333;
+        line-height: 1.4;
+    }
+    h1 {
+        font-size: 24pt;
+        margin-bottom: 5px;
+        text-align: center;
+        color: #000;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .contact-info {
+        text-align: center;
+        font-size: 10pt;
+        margin-bottom: 20px;
+        color: #555;
+    }
+    h2 {
+        font-size: 14pt;
+        border-bottom: 1px solid #000;
+        padding-bottom: 3px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #000;
+        text-transform: uppercase;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+        text-align: justify;
+    }
+    .item-header {
+        font-weight: bold;
+        display: block;
+    }
+    .item-sub {
+        font-style: italic;
+        color: #555;
+    }
+    .item-dates {
+        float: right;
+        font-style: italic;
+    }
+    ul {
+        margin-top: 5px;
+        margin-bottom: 15px;
+        padding-left: 20px;
+    }
+    li {
+        margin-bottom: 4px;
+        text-align: justify;
+    }
+    .block {
+        margin-bottom: 15px;
+    }
+    table {
+        width: 100%;
+    }
+    td {
+        vertical-align: top;
+    }
+</style>
+</head>
+<body>
+
+    <h1>{{ name }}</h1>
+    <div class="contact-info">
+        {{ contact_info }}
+    </div>
+
+    {% if summary %}
+    <h2>Summary</h2>
+    <p>{{ summary }}</p>
+    {% endif %}
+
+    {% if skills %}
+    <h2>Technical Skills</h2>
+    <p>{{ skills | join(", ") }}</p>
+    {% endif %}
+
+    {% if experience %}
+    <h2>Experience</h2>
+    {% for job in experience %}
+    <div class="block">
+        <table>
+            <tr>
+                <td style="width: 70%;">
+                    <span class="item-header">{{ job.title }}</span>
+                    <span class="item-sub">{{ job.company }}</span>
+                </td>
+                <td style="width: 30%; text-align: right;">
+                    <span class="item-dates">{{ job.dates }}</span>
+                </td>
+            </tr>
+        </table>
+        <ul>
+            {% for bullet in job.bullet_points %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if projects %}
+    <h2>Projects</h2>
+    {% for proj in projects %}
+    <div class="block">
+        <span class="item-header">{{ proj.name }}</span>
+        <ul>
+            {% for bullet in proj.description %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if education %}
+    <h2>Education</h2>
+    {% for edu in education %}
+    <div class="block">
+        <table>
+            <tr>
+                <td style="width: 70%;">
+                    <span class="item-header">{{ edu.degree }}</span>
+                    <span class="item-sub">{{ edu.institution }}</span>
+                </td>
+                <td style="width: 30%; text-align: right;">
+                    <span class="item-dates">{{ edu.dates }}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</body>
+</html>
